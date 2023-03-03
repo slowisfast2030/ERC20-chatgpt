@@ -25,6 +25,7 @@ module.exports = {
 			network_id: "11155111",
 			provider: () => new HDWalletProvider(mnemonic, 'https://sepolia.infura.io/v3/9faf676500e24b3693d74249d8c8412c'),
 			gas: 1000000,
+      gasPrice: 15000000000,
       from: '0xCA8415E9C49C69CAC55d640AA752cfe95Aeca071', // linus
       // from: '0x7529a3FA1934AdF47258937443196567AaB43Ac5', // lmz
     },
