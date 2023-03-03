@@ -1,3 +1,5 @@
+const BN = require('bn.js');
+
 const ERC20 = artifacts.require("ERC20");
 
 contract("ERC20", accounts => {
@@ -28,7 +30,8 @@ contract("ERC20", accounts => {
     const balanceAfterFrom = await erc20.balanceOf(from);
     const balanceAfterTo = await erc20.balanceOf(to);
     assert.equal((balanceBeforeFrom - value).toString(), balanceAfterFrom.toString());
-    //assert.equal((balanceBeforeTo + value).toString(), balanceAfterTo.toString());
+    // assert.equal(balanceBeforeTo + value, balanceAfterTo); // 报错
+    assert.equal(balanceBeforeTo.add(new BN(value)).toString(), balanceAfterTo.toString());
   });
 
   it("should approve and transferFrom tokens between accounts", async () => {
@@ -43,6 +46,11 @@ contract("ERC20", accounts => {
     const balanceAfterOwner = await erc20.balanceOf(owner);
     const balanceAfterTo = await erc20.balanceOf(to);
     assert.equal((balanceBeforeOwner - value).toString(), balanceAfterOwner.toString());
-    //assert.equal((balanceBeforeTo + value).toString(), balanceAfterTo.toString());
+    //assert.equal(balanceBeforeTo + value, balanceAfterTo); // 报错
+    assert.equal(balanceBeforeTo.add(new BN(value)).toString(), balanceAfterTo.toString());
   });
 });
+
+// 这将使用 `add()` 函数将 `balanceBeforeTo` 和 `value` 相加，然后将其转换为字符串进行比较。
+// 此外，您需要在测试脚本开头添加以下导入语句，以便使用 `BN` 类型：
+// const BN = require('bn.js');
